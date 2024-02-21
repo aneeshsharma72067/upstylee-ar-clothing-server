@@ -46,3 +46,13 @@ def getAllUsers():
     ]
     return jsonify({"user_count": len(user_list), "users": users})
 
+
+@users_bp.route('/delete-all')
+def deleteAllUsers():
+    try:
+        db.session.query(User).delete()
+        db.session.commit();
+        return {'status':'success','message':'All User objects deleted successfully'}
+    except Exception as e:
+        db.session.rollback();
+        return {'status':'error','message':f'An error occured : {e}'}

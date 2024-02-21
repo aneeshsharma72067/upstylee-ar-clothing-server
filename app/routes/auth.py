@@ -88,7 +88,8 @@ def login():
                     },
                 }
             )
-        except:
+        except Exception as e:
+            print(e)
             return jsonify({"error": "Something went wrong"}), 500
     return {
 
@@ -120,10 +121,10 @@ def logout():
     if request.method == "POST":
         if "user_id" in session:
             session.pop("user_id")
-            return {"message": "success"}
+            return {"status":"success","message": "Logged Out "},200
         else:
-            return {"message": "Unauthorized"}
+            return {"status":"error","message": "Unauthorized"},401
     else:
-        return {"message": "Unauthorized"}
+        return {"message": "Unauthorized"}, 401
 
 
